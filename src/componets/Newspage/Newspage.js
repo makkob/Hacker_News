@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faComment } from "@fortawesome/free-solid-svg-icons";
+
+import styles from "./Newspage.module.css";
+
 export default function Newspage(props) {
   // const dispatch = useDispatch();
   const [itemState, onSetItem] = useState();
@@ -17,11 +22,24 @@ export default function Newspage(props) {
 
   return (
     <>
-      {itemState && <h3 key={itemState.id}>{itemState.title}</h3>}
-
-      {itemState && <a href={itemState.url}></a>}
-      {itemState && <p> {itemState.time}</p>}
-      {itemState && <p> {itemState.by}</p>}
+      {itemState && (
+        <div className={styles.item}>
+          <h2>{itemState.title}</h2>
+          <a href={itemState.url}>Source</a>
+          <hr />
+          <p>
+            <strong>Author: </strong> <i> {itemState.by}</i>
+          </p>
+          <p>
+            <strong>Published at:</strong>{" "}
+            <i>{new Date(itemState.time * 1000).toString()}</i>
+          </p>
+          <p>
+            <FontAwesomeIcon icon={faComment} />{" "}
+            {itemState.kids ? itemState.kids.length : 0} comments
+          </p>
+        </div>
+      )}
     </>
   );
 }
