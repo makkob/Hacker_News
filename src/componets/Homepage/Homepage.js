@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Button } from "react-bootstrap";
+// import { Link } from "react-router-dom";
+// import { NEWSPAGE_ROUTE } from "../../utils/consts";
 import { newsList } from "../../actions/newsListAction";
+import { Item } from "../Item/Item";
+import { Loader } from "../Loader/Loader";
 
 export default function Homepage() {
   const dispatch = useDispatch();
@@ -8,26 +13,29 @@ export default function Homepage() {
   const { loading, news } = newsState;
   console.log(news);
 
-  // console.log(news);
-
   useEffect(() => {
     dispatch(newsList());
   }, []);
-
+  const onUpdateClick = () => {
+    dispatch(newsList());
+  };
   return (
     <div>
+      <Button
+        onClick={() => {
+          onUpdateClick();
+        }}
+        variant="primary"
+      >
+        {" "}
+        Update{" "}
+      </Button>
       {news &&
-        news.map(({ title, by, score, time }) => {
-          return (
-            <div>
-              <h1>{title}</h1>
-              <p>{score}</p>
-              <p>{by}</p>
-              <p>{time}</p>
-            </div>
-          );
+        news.map((item) => {
+          return <Item key={item.id} item={item} />;
         })}
-      {loading && <h1> Loading </h1>}
+
+      {loading && <Loader />}
     </div>
   );
 }

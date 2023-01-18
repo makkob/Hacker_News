@@ -1,14 +1,15 @@
-import Homepage from "./Homepage/Homepage";
-import Newspage from "./Newspage/Newspage";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+// import { routes } from "../routes";
+import Homepage from "./Homepage";
+import Newspage from "./Newspage";
 
 function App() {
   return (
-    <div className="App">
-      <>
-        <Homepage></Homepage>
-        <Newspage></Newspage>
-      </>
-    </div>
+    <Router>
+      <Route path="/" component={Homepage} exact />
+      <Route path="/newspage/:id" component={Newspage} exact />
+    </Router>
   );
 }
 
