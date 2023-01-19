@@ -31,6 +31,9 @@ export default function Newspage(props) {
     }
   }, []);
   console.log("coments", coments);
+  // coments.map(({ data }) => {
+  //   console.log("data", data.text);
+  // });
 
   return (
     <>
@@ -57,14 +60,14 @@ export default function Newspage(props) {
             <FontAwesomeIcon icon={faComment} />{" "}
             {itemState.kids ? itemState.kids.length : 0} comments
           </p>
-          {coments &&
-            coments.map(({ data }) => {
-              <p>{data.by}</p>;
-              <p>{data.text}</p>;
-              <p>{data.time}</p>;
-            })}
         </div>
       )}
+      {coments &&
+        coments.map(({ data }) => {
+          <p>{data.by}</p>;
+          <p>{data.text}</p>;
+          <p>{data.time}</p>;
+        })}
     </>
   );
 }
