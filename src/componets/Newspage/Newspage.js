@@ -62,12 +62,20 @@ export default function Newspage(props) {
           </p>
         </div>
       )}
+
       {coments &&
         coments.map(({ data }) => {
-          <p>{data.by}</p>;
-          <p>{data.text}</p>;
-          <p>{data.time}</p>;
+          return (
+            <div className={styles.item}>
+              <p>{data.by}</p>
+              <p>{data.text}</p>
+              <i>{new Date(data.time * 1000).toString()}</i>;
+            </div>
+          );
         })}
+      <div className={styles.button}>
+        <Button variant="secondary"> Update coments </Button>
+      </div>
     </>
   );
 }
