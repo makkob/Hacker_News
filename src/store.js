@@ -3,13 +3,16 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import { newsListReducer } from "./reducers/newsListReducers";
+import { kidsListReducer } from "./reducers/kidsListReducers";
 
 let rootReducer = combineReducers({
   newsListState: newsListReducer,
+  kidsListState: kidsListReducer,
 });
 
 const initialState = {
   newsListState: {},
+  kidsListState: {},
 };
 
 const middleware = [thunk];

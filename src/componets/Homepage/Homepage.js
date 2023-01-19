@@ -17,12 +17,15 @@ export default function Homepage() {
 
   useEffect(() => {
     dispatch(newsList());
+    setInterval(() => {
+      dispatch(newsList());
+    }, 60000);
   }, []);
   const onUpdateClick = () => {
     dispatch(newsList());
     console.log(news);
-
   };
+
   return (
     <div>
       <div className={styles.nav}>
@@ -36,12 +39,12 @@ export default function Homepage() {
           Update{" "}
         </Button>
       </div>
-        {news &&
-          news.map((item) => {
-            return <Item key={item.id} item={item} />;
-          })}
+      {news &&
+        news.map((item) => {
+          return <Item key={item.id} item={item} />;
+        })}
 
-        {loading && <Loader />}
+      {loading && <Loader />}
     </div>
   );
 }
