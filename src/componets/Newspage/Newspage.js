@@ -28,12 +28,24 @@ export default function Newspage(props) {
     const { kids } = item[0];
     if (kids) {
       dispatch(kidsList(kids));
+      setInterval(() => {
+        dispatch(kidsList(kids));
+      }, 60000);
     }
   }, []);
-  console.log("coments", coments);
-  // coments.map(({ data }) => {
-  //   console.log("data", data.text);
-  // });
+
+  const onUpdateComents = () => {
+    const item = news.filter(({ id }) => {
+      return id == props.match.params.id;
+    });
+
+    onSetItem(...item);
+
+    const { kids } = item[0];
+    if (kids) {
+      dispatch(kidsList(kids));
+    }
+  };
 
   return (
     <>
@@ -66,7 +78,7 @@ export default function Newspage(props) {
       {coments &&
         coments.map(({ data }) => {
           return (
-            <div className={styles.item}>
+            <div key={data.id} className={styles.item}>
               <p>{data.by}</p>
               <p>{data.text}</p>
               <i>{new Date(data.time * 1000).toString()}</i>;
@@ -74,7 +86,15 @@ export default function Newspage(props) {
           );
         })}
       <div className={styles.button}>
-        <Button variant="secondary"> Update coments </Button>
+        <Button
+          onClick={() => {
+            onUpdateComents();
+          }}
+          variant="secondary"
+        >
+          {" "}
+          Update coments{" "}
+        </Button>
       </div>
     </>
   );
