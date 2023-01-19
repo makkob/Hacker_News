@@ -8,6 +8,7 @@ import { faComment } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Newspage.module.css";
 import { Button } from "react-bootstrap";
 import { kidsList } from "../../actions/kidsListActions";
+import Coments from "../Coments/Coments";
 
 export default function Newspage(props) {
   const dispatch = useDispatch();
@@ -79,9 +80,7 @@ export default function Newspage(props) {
         coments.map(({ data }) => {
           return (
             <div key={data.id} className={styles.item}>
-              <p>{data.by}</p>
-              <p>{data.text}</p>
-              <i>{new Date(data.time * 1000).toString()}</i>;
+              <Coments props={data} />
             </div>
           );
         })}
@@ -95,6 +94,7 @@ export default function Newspage(props) {
           {" "}
           Update coments{" "}
         </Button>
+        <Coments />
       </div>
     </>
   );
