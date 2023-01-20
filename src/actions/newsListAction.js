@@ -14,10 +14,9 @@ export const newsList = () => async (dispatch) => {
     const { data } = await axios.get(URL + "newstories.json?print=pretty");
 
     const news = await Promise.all(
-      data.slice(0, 100).map((id) => {
-        const oneNews = axios.get(`${URL}item/${id}.json?print=pretty`);
-        return oneNews;
-      })
+      data
+        .slice(0, 100)
+        .map((id) => axios.get(`${URL}item/${id}.json?print=pretty`))
     );
 
     dispatch({

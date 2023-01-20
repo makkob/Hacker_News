@@ -15,13 +15,13 @@ export default function Homepage() {
 
   useEffect(() => {
     dispatch(newsList());
-    setInterval(() => {
+    const updateInterval = setInterval(() => {
       dispatch(newsList());
     }, 60000);
+    return () => clearInterval(updateInterval);
   }, []);
   const onUpdateClick = () => {
     dispatch(newsList());
-    console.log(news);
   };
 
   return (
@@ -33,8 +33,7 @@ export default function Homepage() {
           }}
           variant="secondary"
         >
-          {" "}
-          Update{" "}
+          Update news
         </Button>
       </div>
       {news &&

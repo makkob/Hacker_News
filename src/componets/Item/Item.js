@@ -8,7 +8,11 @@ export function Item(props) {
   const date = new Date(time * 1000).toString();
   return (
     <div className={styles.item}>
-      <Link key={id} to={"/newspage/" + id} style={{ textDecoration: "none", color: "inherit"}}>
+      <Link
+        key={id}
+        to={"/newspage/" + id}
+        style={{ textDecoration: "none", color: "inherit" }}
+      >
         <h2>{title}</h2>
         <p>
           <strong>Score:</strong> {score}

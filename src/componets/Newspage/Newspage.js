@@ -6,9 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./Newspage.module.css";
+import Comments from "../Comments/Comments";
 import { Button } from "react-bootstrap";
 import { kidsList } from "../../actions/kidsListActions";
-import Coments from "../Coments/Coments";
 
 export default function Newspage(props) {
   const dispatch = useDispatch();
@@ -27,15 +27,15 @@ export default function Newspage(props) {
     onSetItem(...item);
 
     const { kids } = item[0];
-    if (kids) {
+
+    dispatch(kidsList(kids));
+    const updateInterval = setInterval(() => {
       dispatch(kidsList(kids));
-      setInterval(() => {
-        dispatch(kidsList(kids));
-      }, 60000);
-    }
+    }, 60000);
+    return () => clearInterval(updateInterval);
   }, []);
 
-  const onUpdateComents = () => {
+  const onUpdateComments = () => {
     const item = news.filter(({ id }) => {
       return id == props.match.params.id;
     });
@@ -55,6 +55,7 @@ export default function Newspage(props) {
           <Button variant="secondary"> Back </Button>
         </Link>
       </div>
+
       {itemState && (
         <div className={styles.item}>
           <h2>{itemState.title}</h2>
@@ -70,31 +71,33 @@ export default function Newspage(props) {
             <i>{new Date(itemState.time * 1000).toString()}</i>
           </p>
           <p>
-            <FontAwesomeIcon icon={faComment} />{" "}
-            {itemState.kids ? itemState.kids.length : 0} comments
+            <FontAwesomeIcon icon={faComment} /> Comments:{" "}
+            {itemState.kids ? itemState.kids.length : 0}
           </p>
         </div>
       )}
 
-      {coments &&
-        coments.map(({ data }) => {
-          return (
-            <div key={data.id} className={styles.item}>
-              <Coments props={data} />
-            </div>
-          );
-        })}
+      <h2>Replies </h2>
+
+      {coments
+        ? coments.map(({ data }) => {
+            return (
+              <div key={data.id} className={styles.comment} id={data.id}>
+                <Comments props={data} />
+              </div>
+            );
+          })
+        : "Comments section is empty"}
       <div className={styles.button}>
         <Button
           onClick={() => {
-            onUpdateComents();
+            onUpdateComments();
           }}
           variant="secondary"
         >
           {" "}
-          Update coments{" "}
+          Update comments{" "}
         </Button>
-        <Coments />
       </div>
     </>
   );
